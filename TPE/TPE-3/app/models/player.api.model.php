@@ -58,6 +58,14 @@
             $players = $query->fetchAll(PDO::FETCH_OBJ);
             return $players; 
         }
+        //Paginado 
+        function paginated($page,$limit){
+            $offset = (($page - 1) * $limit); 
+            $query = $this->db->prepare("SELECT jugadores.*, equipos.name_team FROM jugadores JOIN equipos ON jugadores.id_team = equipos.id_team ORDER BY id_player  LIMIT ".$offset ." , ".$limit);
+            $query->execute();
+            $players = $query->fetchAll(PDO::FETCH_OBJ);
+            return $players; 
+        }    
         //Filtra jugadores por equipo
         function filter($filter){
             $query = $this->db->prepare("SELECT * FROM jugadores WHERE id_team = ?");

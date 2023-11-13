@@ -77,10 +77,11 @@ El ENDPOINT es: ` http://localhost/TPE/TPE-3/api/ `
     |Boca Juniors: 3
     |Independiente: 4
     |Santamarina: 6
+  - page, limit: Cantidad para omitir y mostrar, tienen que pasar INT por parametros, nunca un string, ni 0 en el parametro page.
 
  🛑🛑 EJEMPLOS de getALL 🛑🛑
  
-  `http://localhost/TPE/TPE-3/api/players` Este es el getALL basico para traer todos los jugadores.
+  `http://localhost/TPE/TPE-3/api/players` Este es el getALL basico para traer todos los jugadores de la tabla.
   
   `http://localhost/TPE/TPE-3/api/players?orderby=ASC&sort=goals&filter=1` Ordeno de manera ASC(ascendente), por la columna goals y filtrando por el equipo con id_team = 1 (River Plate).
   
@@ -88,7 +89,7 @@ El ENDPOINT es: ` http://localhost/TPE/TPE-3/api/ `
   
   `http://localhost/TPE/TPE-3/api/players?filter=4` filtrado de los jugadores por la id_team, en este caso nos va a traer los jugadores con id_team = 4 (Independiente).
 
-
+  `http://localhost/TPE/TPE-3/api/players?page=1&limit=3` Paginado de la tabla de jugadores.
 
 ## TABLA COMENTARIOS:
 

@@ -21,6 +21,8 @@
             $sort = $_GET['sort'] ?? null;
             $order = $_GET['orderby'] ?? null;
             $filter = $_GET['filter'] ?? null;
+            $page = $_GET['page'] ?? null;
+            $limit = $_GET['limit'] ?? null;
            
             try {
                 
@@ -44,10 +46,14 @@
                         return $this->view->response("La columna no existe, por favor revise la documentacion",400);
                     }
                 }
-             
                 if(!empty($filter) && !is_numeric($filter)){
             
                     $this->view->response("No se puede colocar un STRING en el filtrado, revise la documentacion", 400);
+                
+                }
+                if(!empty($limit) && !is_numeric($limit)){
+
+                    return $this->view->response("No se puede colocar un STRING en el limit. Revise la documentacion", 400);
                 
                 }
             
@@ -66,7 +72,7 @@
                         $players = $this->modelPlayer->sortedAndOrder($sort,$order);
 
                     }
-                        // Filtrado
+                        //Filtrado
                         else if (!empty($filter) && isset($filter)) {   
 
                             $players = $this->modelPlayer->filter($filter);
@@ -76,11 +82,26 @@
                                 $this->view->response("El arreglo esta VACIO a causa de ingresar ID erroneo en el filtrado, revise la documentacion", 400);
                             }
                         }
-                        else {
-
-                            $players = $this->modelPlayer->getAllPlayers();
-
-                        } 
+                            //Paginado
+                            else if (isset($page) && (!empty($limit)) && isset($limit)) {
+                            
+                                if(!empty($page==0) || !is_numeric($page)){
+                                
+                                    return $this->view->response("Page no puede ser 0 ni un STRING, revise la documentacion",400);
+                                }
+                            
+                                $players = $this->modelPlayer->paginated($page,$limit);
+                            
+                                if (empty($players)){
+                                
+                                    $this->view->response("El arreglo esta VACIO a causa de ingresar un ID erroneo", 400);
+                                }
+                            }
+                                else {
+                                
+                                    $players = $this->modelPlayer->getAllPlayers();
+                                
+                                } 
 
                     return $this->view->response($players,200);
                
