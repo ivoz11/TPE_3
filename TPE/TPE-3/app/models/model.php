@@ -19,6 +19,28 @@
                 // Si no hay crearlas
                 $sql =<<<END
                 --
+                -- Estructura de tabla para la tabla `comentarios`
+                --
+                
+                CREATE TABLE `comentarios` (
+                  `id_comment` int(11) NOT NULL,
+                  `comment` varchar(255) NOT NULL,
+                  `id_player` int(11) NOT NULL
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+                
+                --
+                -- Volcado de datos para la tabla `comentarios`
+                --
+                
+                INSERT INTO `comentarios` (`id_comment`, `comment`, `id_player`) VALUES
+                (1, 'Este jugador es muy crack', 8),
+                (2, 'Vino a ganar la copa libertadores', 2),
+                (3, 'vamoo', 1),
+                (9, 'Enzo gracias por existir', 8);
+                
+                -- --------------------------------------------------------
+                
+                --
                 -- Estructura de tabla para la tabla `equipos`
                 --
                 
@@ -38,7 +60,7 @@
                 (1, 'River Plate', 'Argentina', 'Martin Demichelis', 70),
                 (3, 'Boca Juniors', 'Argentina', 'Jorge Almiron', 73),
                 (4, 'Independiente', 'Argentina', 'Carlos Tevez', 20),
-                (6, 'Velez Sarfield', 'Argentina', 'Sebastian Mendez', 16);
+                (6, 'Santamarina', 'Argentina', 'Jorge Izquierdo', 20);
                 
                 -- --------------------------------------------------------
                 
@@ -67,7 +89,11 @@
                 (3, 'Ivan', 'Marcone', 33, 4, 'Diestro', 'Centrocampista', 3),
                 (4, 'Franco', 'Armani', 36, 1, 'Diestro', 'Arquero', 1),
                 (6, 'Ramiro', 'Funes Mori', 32, 1, 'Izquierda', 'Defensor', 19),
-                (7, 'Dario ', 'Benedetto', 33, 3, 'Diestro', 'Delantero', 164);
+                (8, 'Enzo', 'Fernandez', 22, 1, 'Diestro', 'Volante', 0),
+                (9, 'Dario', 'Benedetto', 33, 3, 'Derecho', 'Delantero', 164),
+                (10, 'Frank', 'Fabra', 32, 3, 'Derecho', 'Defensor', 19),
+                (11, 'Alexis', 'Canelo', 31, 4, 'Izquierdo', 'Delantero', 40),
+                (12, 'Rodrigo', 'Marquez', 21, 4, 'Derecho', 'Extremo', 5);
                 
                 -- --------------------------------------------------------
                 
@@ -93,6 +119,13 @@
                 --
                 
                 --
+                -- Indices de la tabla `comentarios`
+                --
+                ALTER TABLE `comentarios`
+                  ADD PRIMARY KEY (`id_comment`),
+                  ADD KEY `FK_jugadores_comentarios` (`id_player`);
+                
+                --
                 -- Indices de la tabla `equipos`
                 --
                 ALTER TABLE `equipos`
@@ -116,16 +149,22 @@
                 --
                 
                 --
+                -- AUTO_INCREMENT de la tabla `comentarios`
+                --
+                ALTER TABLE `comentarios`
+                  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+                
+                --
                 -- AUTO_INCREMENT de la tabla `equipos`
                 --
                 ALTER TABLE `equipos`
-                  MODIFY `id_team` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+                  MODIFY `id_team` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
                 
                 --
                 -- AUTO_INCREMENT de la tabla `jugadores`
                 --
                 ALTER TABLE `jugadores`
-                  MODIFY `id_player` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+                  MODIFY `id_player` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
                 
                 --
                 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -136,6 +175,12 @@
                 --
                 -- Restricciones para tablas volcadas
                 --
+                
+                --
+                -- Filtros para la tabla `comentarios`
+                --
+                ALTER TABLE `comentarios`
+                  ADD CONSTRAINT `FK_jugadores_comentarios` FOREIGN KEY (`id_player`) REFERENCES `jugadores` (`id_player`);
                 
                 --
                 -- Filtros para la tabla `jugadores`
