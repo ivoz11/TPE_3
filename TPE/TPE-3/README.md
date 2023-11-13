@@ -186,6 +186,14 @@ El ENDPOINT es: ` http://localhost/TPE/TPE-3/api/ `
 
  Este metodo nos sirve para traer todos los equipos.
 
+ ## Para autenticarse y poder hacer el POST/PUT/DELETE de jugadores y equipos o hacer POST/DELETE de comentarios es necesario autenticarse por TOKEN.
+
+ `$router->addRoute('user/token', 'GET',    'UserApiController', 'getToken');`
+ `http://localhost/TPE/TPE-3/api/user/token`
+
+  Usuario: webadmin
+  Contraseña: admin
+
 
 
 

@@ -2,14 +2,14 @@
     require_once 'app/controllers/api.controller.php';
     require_once 'app/models/comment.api.model.php';
 
-    class CommentApiController extends ApiController{
+    class CommentApiController extends ApiController {
 
         private $modelComment;
 
         public function __construct(){
             parent::__construct();
             $this->modelComment = new CommentModel();
-         
+            
         }
 
         
@@ -61,6 +61,12 @@
         //Crea un comentario nuevo
         function createComment($params = []) {
             try{
+                $user = $this->authHelper->currentUser();
+                if(!$user) {
+                    $this->view->response('Unauthorized', 401);
+                    return;
+                }
+
                 $body = $this->getData();
 
                 $comment = $body->comment;
@@ -84,6 +90,12 @@
         // Elimina un comentario de un jugador
         function deleteComment($params = []){
             try{
+                $user = $this->authHelper->currentUser();
+                if(!$user) {
+                    $this->view->response('Unauthorized', 401);
+                    return;
+                }
+                
                 if(!empty($params)){  
                     $idComment = $params[':ID'];
                     $idComment2 = $params[':commentID'];

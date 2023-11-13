@@ -1,17 +1,16 @@
 <?php
     require_once 'app/controllers/api.controller.php';
     require_once 'app/models/player.api.model.php';
+    
 
     class PlayerApiController extends ApiController{
 
         private $modelPlayer;
     
-
         public function __construct(){
             parent::__construct();
             $this->modelPlayer = new PlayerModel();
-           
-         
+            
         }
 
         //Trae todos los jugadores
@@ -131,6 +130,12 @@
         //Elimina un jugador pasandole el id
         function deletePlayer($params = []) {
             try{
+                $user = $this->authHelper->currentUser();
+                if(!$user) {
+                    $this->view->response('Unauthorized', 401);
+                    return;
+                }
+
                 $id = $params[':ID'];
                 $player = $this->modelPlayer->getPlayer($id);
 
@@ -150,6 +155,12 @@
         //Crea un jugador nuevo
         function createPlayer($params = []) {
             try{
+                $user = $this->authHelper->currentUser();
+                if(!$user) {
+                    $this->view->response('Unauthorized', 401);
+                    return;
+                }
+
                 $body = $this->getData();
 
                 $name = $body->name_player;
@@ -178,6 +189,12 @@
         //Modifica un jugador
         function updatePlayer($params = []) {
             try{
+                $user = $this->authHelper->currentUser();
+                if(!$user) {
+                    $this->view->response('Unauthorized', 401);
+                    return;
+                }
+                
                 $id = $params[':ID'];
                 $player = $this->modelPlayer->getPlayer($id);
 

@@ -1,8 +1,12 @@
 <?php
+    require_once 'config.php';
+    
     require_once 'libs/router.php';
+
     require_once 'app/controllers/player.api.controller.php';
     require_once 'app/controllers/comment.api.controller.php';
     require_once 'app/controllers/team.api.controller.php';
+    require_once 'app/controllers/user.api.controller.php';
    
 
 
@@ -33,6 +37,9 @@
     $router->addRoute('teams/:ID', 'DELETE', 'TeamApiController', 'deleteTeam');
     $router->addRoute('teams/:ID', 'PUT',    'TeamApiController', 'updateTeam');
 
+    //Token
+    //                 endpoint     verbo        controller         metodo
+    $router->addRoute('user/token', 'GET',    'UserApiController', 'getToken');
 
     
     $router->route($_GET['resource'], $_SERVER['REQUEST_METHOD']);

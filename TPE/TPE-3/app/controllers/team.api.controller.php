@@ -10,7 +10,6 @@
         public function __construct(){
             parent::__construct();
             $this->modelTeam = new TeamModel();
-           
          
         }
 
@@ -48,6 +47,12 @@
         //Elimina un equipo pasandole el id
         function deleteTeam($params = []) {
             try{
+                $user = $this->authHelper->currentUser();
+                if(!$user) {
+                    $this->view->response('Unauthorized', 401);
+                    return;
+                }
+
                 $id = $params[':ID'];
                 $team = $this->modelTeam->getTeam($id);
 
@@ -67,6 +72,12 @@
         //Crea un equipo nuevo
         function createTeam($params = []) {
             try{
+                $user = $this->authHelper->currentUser();
+                if(!$user) {
+                    $this->view->response('Unauthorized', 401);
+                    return;
+                }
+
                 $body = $this->getData();
 
                 $name = $body->name_team;
@@ -92,6 +103,12 @@
         //Modifica un equipo
         function updateTeam($params = []) {
             try{
+                $user = $this->authHelper->currentUser();
+                if(!$user) {
+                    $this->view->response('Unauthorized', 401);
+                    return;
+                }
+
                 $id = $params[':ID'];
                 $team = $this->modelTeam->getTeam($id);
 
